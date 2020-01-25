@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.example.music.App
 import com.example.music.R
 import com.example.music.model.lastfm.Track
@@ -29,10 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         presenter.attachView(this)
 
-        val adapter = MyAdapter(supportFragmentManager)
-
-        viewpager.adapter = adapter
-        viewpager.currentItem = 1
+        setupViewPager(viewpager)
+        tablayout.setupWithViewPager(viewpager)
 
         btnStartSearch.setOnClickListener {
             if (etNameTrack.text.toString().isNotBlank()) {
@@ -45,6 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     fun setTrackList(list: List<Track>?) {
 
+        if (list.isNullOrEmpty()) {
+            Toast.makeText(this, "Результатов нет", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun showError() {
@@ -59,19 +61,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class MyAdapter internal constructor(fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
+    private fun setupViewPager(viewPager: ViewPager) {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(LastFmFragment(), resources.getString(R.string.last_fm))
+        adapter.addFragment(ITunesFragment(), resources.getString(R.string.itunes))
+        viewPager.adapter = adapter
+    }
 
-        override fun getCount(): Int {
-            return 2
+    internal class ViewPagerAdapter(manager: FragmentManager?) :
+        FragmentPagerAdapter(manager) {
+
+        private val mFragmentList: MutableList<Fragment> = ArrayList()
+        private val mFragmentTitleList: MutableList<String> = ArrayList()
+
+        override fun getItem(position: Int): Fragment = mFragmentList[position]
+
+        override fun getCount(): Int = mFragmentList.size
+
+        override fun getPageTitle(position: Int): CharSequence? = mFragmentTitleList[position]
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
         }
 
-        override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> LastFmFragment()
-                1 -> ITunesFragment()
-                else -> LastFmFragment()
-            }
-        }
     }
 }

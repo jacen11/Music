@@ -1,6 +1,7 @@
 package com.example.music.presentation
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,10 +10,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.music.App
 import com.example.music.R
+import com.example.music.adapter.LastFmAdapter
 import com.example.music.model.lastfm.Track
 import com.example.music.viewpager.ITunesFragment
 import com.example.music.viewpager.LastFmFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.last_fm_item_fragment.*
 import javax.inject.Inject
 
 
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var presenter: Presenter
+
+    val adapter = ViewPagerAdapter(supportFragmentManager)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         setupViewPager(viewpager)
         tablayout.setupWithViewPager(viewpager)
+
+
+
 
         btnStartSearch.setOnClickListener {
             if (etNameTrack.text.toString().isNotBlank()) {
@@ -46,12 +54,27 @@ class MainActivity : AppCompatActivity() {
 
         if (list.isNullOrEmpty()) {
             Toast.makeText(this, "Результатов нет", Toast.LENGTH_LONG).show()
+        } else {
+            // val adapter = LastFmAdapter(list)
+            val findFragmentById: LastFmFragment = adapter.getItem(0) as LastFmFragment
+            // val findFragmentById: LastFmFragment = supportFragmentManager.findFragmentById(R.id.last_fm_list_fragment) as LastFmFragment
+            val bundle = Bundle()
+            //bundle.putParcelableArrayList("data", list as ArrayList<Track>)
+            // findFragmentById.arguments = bundle
+
+            findFragmentById.show(LastFmAdapter(list))
+
+            //  rl.adap //. .setAdapter(adapter)
+
         }
+
+
     }
 
     fun showError() {
         Toast.makeText(this, "Произошла ошибка", Toast.LENGTH_LONG).show()
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -62,13 +85,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(LastFmFragment(), resources.getString(R.string.last_fm))
         adapter.addFragment(ITunesFragment(), resources.getString(R.string.itunes))
         viewPager.adapter = adapter
     }
 
-    internal class ViewPagerAdapter(manager: FragmentManager?) :
+    class ViewPagerAdapter(manager: FragmentManager?) :
         FragmentPagerAdapter(manager) {
 
         private val mFragmentList: MutableList<Fragment> = ArrayList()

@@ -2,4 +2,6 @@
     <string name="app_name">Music</string>
     <string name="etNameTrack">Введите название песни</string>
     <string name="btnStartSearch">Найти</string>
+    <string name="itunes">iTunes</string>
+    <string name="last_fm">Last.fm</string>
 </resources>

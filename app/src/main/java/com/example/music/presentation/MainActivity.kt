@@ -55,26 +55,17 @@ class MainActivity : AppCompatActivity() {
         if (list.isNullOrEmpty()) {
             Toast.makeText(this, "Результатов нет", Toast.LENGTH_LONG).show()
         } else {
-            // val adapter = LastFmAdapter(list)
-            val findFragmentById: LastFmFragment = adapter.getItem(0) as LastFmFragment
-            // val findFragmentById: LastFmFragment = supportFragmentManager.findFragmentById(R.id.last_fm_list_fragment) as LastFmFragment
-            val bundle = Bundle()
-            //bundle.putParcelableArrayList("data", list as ArrayList<Track>)
-            // findFragmentById.arguments = bundle
-
-            findFragmentById.show(LastFmAdapter(list))
-
-            //  rl.adap //. .setAdapter(adapter)
-
+            getLastFmFragment().show(list)
         }
-
-
     }
+
+    private fun getLastFmFragment() = adapter.getItem(0) as LastFmFragment
+    private fun getITunesFragment() = adapter.getItem(1) as ITunesFragment
+
 
     fun showError() {
         Toast.makeText(this, "Произошла ошибка", Toast.LENGTH_LONG).show()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

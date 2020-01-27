@@ -3,8 +3,10 @@ package com.example.music.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.music.R
 import com.example.music.model.lastfm.Track
 
@@ -16,16 +18,16 @@ class LastFmAdapter(val tracks: List<Track>) :
 
     class TrackViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-       // var rl: RecyclerView
+        // var rl: RecyclerView
         var name: TextView
         var artist: TextView
-        // var image: ImageView
+        var image: ImageView
 
         init {
-           // rl = itemView.findViewById(R.id.rl)
+            // rl = itemView.findViewById(R.id.rl)
             name = itemView.findViewById(R.id.txtName)
             artist = itemView.findViewById(R.id.txtArtist)
-            //  image = itemView.findViewById(R.id.image)
+            image = itemView.findViewById(R.id.image)
         }
     }
 
@@ -44,6 +46,7 @@ class LastFmAdapter(val tracks: List<Track>) :
 
         holder.artist.text = tracks[position]?.artist
         holder.name.text = tracks[position]?.name
+        Glide.with( holder.image).load(tracks[position]?.image?.get(2)?.url).into(holder.image);
     }
 
 }

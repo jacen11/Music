@@ -1,6 +1,7 @@
 package com.example.music.di
 
 import com.example.music.BuildConfig
+import com.example.music.repository.ITunesService
 import com.example.music.repository.LastFmService
 import dagger.Module
 import dagger.Provides
@@ -11,9 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor.*
+import javax.inject.Named
 
 
 private const val BASE_URL_LAST_FM = "https://ws.audioscrobbler.com/2.0/"
+private const val BASE_URL_ITUNES = "https://itunes.apple.com/search/"
 
 @Module
 class RestModule {
@@ -26,6 +29,7 @@ class RestModule {
 
     @Provides
     @Singleton
+    @Named("LastFm")
     fun provideLastFm(): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL_LAST_FM)
         .addConverterFactory(GsonConverterFactory.create())
@@ -35,7 +39,22 @@ class RestModule {
 
     @Provides
     @Singleton
-    fun provideTrackLastFm(retrofit: Retrofit): LastFmService =
+    fun provideTrackLastFm(@Named("LastFm") retrofit: Retrofit): LastFmService =
         retrofit.create(LastFmService::class.java)
+
+    @Provides
+    @Singleton
+    @Named("iTunes")
+    fun provideITunes(): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL_ITUNES)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(getClient())
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideTrackITunes(@Named("iTunes") retrofit: Retrofit): ITunesService =
+        retrofit.create(ITunesService::class.java)
 
 }

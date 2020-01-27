@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.music.App
 import com.example.music.R
 import com.example.music.adapter.LastFmAdapter
+import com.example.music.model.itunes.Result
 import com.example.music.model.lastfm.Track
 import com.example.music.viewpager.ITunesFragment
 import com.example.music.viewpager.LastFmFragment
@@ -38,9 +39,6 @@ class MainActivity : AppCompatActivity() {
         setupViewPager(viewpager)
         tablayout.setupWithViewPager(viewpager)
 
-
-
-
         btnStartSearch.setOnClickListener {
             if (etNameTrack.text.toString().isNotBlank()) {
                 presenter.searchTrack(etNameTrack.text.toString())
@@ -50,12 +48,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setTrackList(list: List<Track>?) {
-
+    fun setTrackListLastFm(list: List<Track>?) {
         if (list.isNullOrEmpty()) {
-            Toast.makeText(this, "Результатов нет", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Результатов по LastFm нет", Toast.LENGTH_LONG).show()
         } else {
             getLastFmFragment().show(list)
+        }
+    }
+
+    fun setTrackListITunes(list: List<Result>?) {
+        if (list.isNullOrEmpty()) {
+            Toast.makeText(this, "Результатов по ITunes нет", Toast.LENGTH_LONG).show()
+        } else {
+            getITunesFragment().show(list)
         }
     }
 

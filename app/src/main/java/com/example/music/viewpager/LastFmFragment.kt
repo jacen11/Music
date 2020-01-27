@@ -24,6 +24,7 @@ class LastFmFragment : Fragment() {
     }
 
     fun show(tracks: List<Track>){
+        
       //  list.layoutManager = LinearLayoutManager(activity)
         list.adapter = LastFmAdapter(tracks)
     }

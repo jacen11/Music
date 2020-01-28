@@ -32,7 +32,7 @@ class PresenterImpl @Inject constructor(
                 view?.setTrackListLastFm(results.results?.trackmatches?.track)
                 Log.i("lastFmService", results.toString())
             }, { ex ->
-                Log.e("lastFmService", ex.message)
+                Log.e("lastFmServiceError", ex.message)
                 view?.showError()
             })
 
@@ -44,7 +44,7 @@ class PresenterImpl @Inject constructor(
                 view?.setTrackListITunes(responce.results)
                 Log.i("iTunesService", responce.toString())
             }, { ex ->
-                Log.e("iTunesService", ex.message)
+                Log.e("iTunesServiceError", ex.message)
                 view?.showError()
             })
 

@@ -16,19 +16,10 @@ import java.util.*
 class ITunesAdapter(val tracks: List<Result>) :
     RecyclerView.Adapter<ITunesAdapter.TrackViewHolder>() {
 
-    class TrackViewHolder internal constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        // var rl: RecyclerView
-        var name: TextView
-        var artist: TextView
-        var image: ImageView
-
-        init {
-            // rl = itemView.findViewById(R.id.rl)
-            name = itemView.findViewById(R.id.txtName)
-            artist = itemView.findViewById(R.id.txtArtist)
-            image = itemView.findViewById(R.id.image)
-        }
+    class TrackViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var name: TextView = itemView.findViewById(R.id.txtName)
+        var artist: TextView = itemView.findViewById(R.id.txtArtist)
+        var image: ImageView = itemView.findViewById(R.id.image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder =

@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
     private fun getLastFmFragment() = adapter.getItem(0) as LastFmFragment
     private fun getITunesFragment() = adapter.getItem(1) as ITunesFragment
 
-
     fun showError() {
         Toast.makeText(this, "Произошла ошибка", Toast.LENGTH_LONG).show()
     }

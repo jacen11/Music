@@ -14,7 +14,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor.*
 import javax.inject.Named
 
-
 private const val BASE_URL_LAST_FM = "https://ws.audioscrobbler.com/2.0/"
 private const val BASE_URL_ITUNES = "https://itunes.apple.com/search/"
 

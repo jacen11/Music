@@ -17,14 +17,18 @@
         android:id="@+id/btnStartSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnStartSearch" />
+        android:text="@string/btnStartSearch"
+        android:textColor="@color/textTabs"
+        android:background="@color/colorPrimaryDark"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabMode="fixed"
+        app:tabTextColor="@color/textTabs"
+        android:background="@color/colorPrimary"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

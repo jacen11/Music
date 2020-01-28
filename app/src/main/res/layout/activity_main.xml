@@ -10,7 +10,7 @@
         android:id="@+id/etNameTrack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/etNameTrack"
+        android:hint="@string/etNameTrack"
         android:textSize="20sp" />
 
     <Button
